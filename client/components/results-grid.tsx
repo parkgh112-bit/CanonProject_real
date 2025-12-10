@@ -1,14 +1,30 @@
 "use client"
 
 import { CheckCircle, AlertCircle } from "lucide-react"
+import { useState } from "react"
 
 export function ResultsGrid({ results }: any) {
+  const [selectedResult, setSelectedResult] = useState<any | null>(null)
+
   if (results.length === 0) {
     return (
       <div className="text-center py-12">
         <p className="text-slate-400">No results yet. Start analysis to see results here.</p>
       </div>
     )
+  }
+
+  // File → Blob URL 생성 함수
+  const getBlobURL = (file: File) => URL.createObjectURL(file)
+
+  const getImageSrc = (result: any) => {
+    if (result.details?.annotated_image) {
+      return `data:image/jpeg;base64,${result.details.annotated_image}`;
+    }
+    if (result?.file) {
+      return getBlobURL(result.file);
+    }
+    return ""; // Placeholder or empty
   }
 
   return (
@@ -22,6 +38,7 @@ export function ResultsGrid({ results }: any) {
         </select>
       </div>
 
+      {/* Results Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {results.map((result: any) => (
           <div
@@ -29,21 +46,39 @@ export function ResultsGrid({ results }: any) {
             className="bg-slate-800 border border-slate-700 rounded-lg overflow-hidden hover:border-slate-600 transition-all hover:shadow-lg hover:shadow-slate-900/50"
           >
             {/* Thumbnail */}
-            <div className="aspect-square bg-gradient-to-br from-slate-900 to-slate-950 flex items-center justify-center relative overflow-hidden">
-              <div className="absolute inset-0 opacity-20">
-                <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_30%,rgba(255,255,255,.1)_50%,transparent_70%)]"></div>
-              </div>
-              <div className="text-center z-10">
-                <File className="w-8 h-8 text-slate-500 mx-auto mb-2" />
-                <p className="text-xs text-slate-500">Preview</p>
-              </div>
+            <div
+              className="aspect-square bg-gradient-to-br from-slate-900 to-slate-950 flex items-center justify-center relative overflow-hidden cursor-pointer group"
+              onClick={() => setSelectedResult(result)}
+            >
+              {result.file ? (
+                <>
+                  <img
+                    src={getImageSrc(result)}
+                    alt={result.name}
+                    className="w-full h-full object-cover"
+                    onLoad={(e) => {
+                      if (e.currentTarget.src.startsWith('blob:')) {
+                        URL.revokeObjectURL(e.currentTarget.src)
+                      }
+                    }}
+                    onError={() => console.error("이미지 로드 실패:", result.name)}
+                  />
+                  <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all flex items-center justify-center">
+                    <p className="text-white text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                      클릭하여 확대
+                    </p>
+                  </div>
+                </>
+              ) : (
+                <div className="text-center z-10">
+                  <p className="text-xs text-slate-500">이미지 없음</p>
+                </div>
+              )}
             </div>
 
-            {/* Result Info */}
+            {/* Info Area */}
             <div className="p-4 space-y-3">
-              <div className="truncate">
-                <p className="text-sm font-medium text-slate-300 truncate">{result.name}</p>
-              </div>
+              <p className="text-sm font-medium text-slate-300 truncate">{result.name}</p>
 
               <div className="flex items-center gap-2">
                 {result.status === "PASS" ? (
@@ -60,21 +95,106 @@ export function ResultsGrid({ results }: any) {
               </div>
 
               {result.reason && (
-                <p className="text-xs text-slate-400 bg-slate-900/50 px-2 py-1 rounded">{result.reason}</p>
+                <p className="text-xs text-slate-400 bg-slate-900/50 px-2 py-1 rounded">
+                  {result.reason}
+                </p>
+              )}
+
+              {/* 상세 정보 */}
+              {result.details && (
+                <div className="space-y-1 pt-2 border-t border-slate-700">
+                  {result.details.ocr_status && (
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-slate-500">OCR:</span>
+                      <span
+                        className={`font-medium ${
+                          result.details.ocr_status === "Pass"
+                            ? "text-emerald-400"
+                            : "text-red-400"
+                        }`}
+                      >
+                        {result.details.ocr_status} ({result.details.ocr_lang || "N/A"})
+                      </span>
+                    </div>
+                  )}
+                  {result.details.yolo_status && (
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-slate-500">YOLO:</span>
+                      <span
+                        className={`font-medium ${
+                          result.details.yolo_status === "Pass"
+                            ? "text-emerald-400"
+                            : "text-red-400"
+                        }`}
+                      >
+                        {result.details.yolo_status}
+                      </span>
+                    </div>
+                  )}
+                  {result.details.cnn_status && (
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-slate-500">CNN:</span>
+                      <span
+                        className={`font-medium ${
+                          result.details.cnn_status === "Pass"
+                            ? "text-emerald-400"
+                            : "text-red-400"
+                        }`}
+                      >
+                        {result.details.cnn_status}
+                      </span>
+                    </div>
+                  )}
+                  {result.details.execution_time && (
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-slate-500">Execution Time:</span>
+                      <span className="font-medium text-slate-300">
+                        {result.details.execution_time}s
+                      </span>
+                    </div>
+                  )}
+                </div>
               )}
 
               <div className="flex items-center justify-between pt-2 border-t border-slate-700">
                 <span className="text-xs text-slate-500">Confidence</span>
-                <span className="text-sm font-semibold text-cyan-400">{result.confidence}%</span>
+                <span className="text-sm font-semibold text-cyan-400">
+                  {result.confidence}%
+                </span>
               </div>
             </div>
           </div>
         ))}
       </div>
+
+      {/* Image Modal */}
+      {selectedResult && (
+        <div
+          className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4"
+          onClick={() => setSelectedResult(null)}
+        >
+          <div className="relative max-w-4xl max-h-[90vh]">
+            <img
+              src={getImageSrc(selectedResult)}
+              alt="확대 이미지"
+              className="max-w-full max-h-[90vh] object-contain rounded-lg"
+              onLoad={(e) => {
+                if (e.currentTarget.src.startsWith('blob:')) {
+                  URL.revokeObjectURL(e.currentTarget.src)
+                }
+              }}
+              onClick={(e) => e.stopPropagation()}
+            />
+
+            <button
+              onClick={() => setSelectedResult(null)}
+              className="absolute top-4 right-4 bg-black/50 hover:bg-black/70 text-white rounded-full p-2 transition-colors"
+            >
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
-}
-
-function File({ className }: { className: string }) {
-  return <svg className={className} fill="none" stroke="currentColor" viewBox="0 0 24 24" />
 }

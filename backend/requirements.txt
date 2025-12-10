@@ -1,0 +1,19 @@
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
+python-multipart==0.0.6
+pillow==10.1.0
+numpy==1.24.3
+pandas==2.0.3
+opencv-python==4.8.1.78
+
+# YOLO 모델
+ultralytics==8.0.196
+torch>=2.0.0
+torchvision>=0.15.0
+
+# OCR 모델 (EasyOCR)
+easyocr==1.7.2
+
+# ViT 모델 (Hugging Face)
+transformers
+accelerate
