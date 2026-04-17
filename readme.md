@@ -1,9 +1,54 @@
-## 1. 프로젝트 개요 (상단 추가)
-Canon AI Project: FastAPI 기반 모델 서빙 및 실시간 추론
+# 📸 Canon AI Project: Intelligent Quality Inspection System
 
-Project Goal: AI 모델을 실제 서비스 환경(FastAPI)에 이식하고 효율적인 추론 서버 구축.
+**YOLO, CNN, OCR 기술을 결합한 지능형 이미지 분석 및 실시간 품질 검사 플랫폼**
 
-My Role: 모델 서빙 환경 구축 및 윈도우 기반 서버 라이브러리 충돌 이슈 해결.
+본 프로젝트는 제조 및 검수 공정에서 발생할 수 있는 결함을 AI 모델을 통해 실시간으로 탐지하고 분류하는 통합 시스템입니다. FastAPI 기반의 고성능 모델 서빙 인프라와 Next.js 기반의 직관적인 관리 대시보드를 제공합니다.
+
+---
+
+## 🚀 핵심 기능 (Key Features)
+
+### 1. Multi-Model AI 분석 파이프라인
+*   **Object Detection (YOLO)**: 이미지 내 핵심 부품 및 객체 위치 탐지.
+*   **Classification (CNN)**: 탐지된 객체의 상태(Pass/Fail)를 정밀 분류.
+*   **Text Recognition (OCR)**: 제품 내 각인된 텍스트 및 시리얼 번호를 추출하여 데이터화.
+
+### 2. 실시간 모니터링 & 배치 분석
+*   **Live Stream Analysis**: 연결된 카메라를 통해 실시간으로 프레임을 분석하고 즉각적인 피드백 제공.
+*   **Batch Processing**: 다량의 이미지를 업로드하여 일괄적으로 분석하고 분석 리포트 생성.
+
+### 3. 데이터 시각화 및 관리
+*   **Analysis Dashboard**: 분석 결과(합격/불합격), 신뢰도(Confidence), 실패 사유 등을 그리드 뷰로 시각화.
+*   **Statistical Analytics**: 전체 공정의 합격률 및 오류 유형별 통계 대시보드 제공.
+*   **Report Export**: 분석 완료 데이터를 CSV 형식으로 추출하여 데이터 자산화 지원.
+
+---
+
+## 🛠 기술 스택 (Tech Stack)
+
+### Backend & AI
+*   **Framework**: FastAPI (Python 3.11+)
+*   **AI Models**: PyTorch (YOLO, Custom CNN Classifier), Tesseract/OCR
+*   **Database**: SQLite (SQLAlchemy ORM)
+*   **Serving**: Uvicorn
+
+### Frontend
+*   **Framework**: Next.js 14 (TypeScript)
+*   **Styling**: Tailwind CSS, Shadcn/UI
+*   **Icons**: Lucide-React
+*   **State Management**: React Hooks
+
+---
+
+## 🏗 시스템 아키텍처 (Architecture)
+
+1.  **Client**: 사용자 이미지 업로드 또는 실시간 카메라 스트리밍 요청 (Next.js)
+2.  **API Server**: 이미지 전처리 및 AI 모델 추론 파이프라인 실행 (FastAPI)
+3.  **Model Inference**: YOLO(탐지) -> CNN(분류) -> OCR(인식) 순차 처리
+4.  **Database**: 분석 결과 및 통계 데이터 영구 저장 (SQLite)
+5.  **Response**: 최종 판단 결과 및 시각화 데이터를 대시보드에 반환
+
+---
 
 
 ## PyTorch DLL 로드 오류 해결 보고서 (WinError 1114)
