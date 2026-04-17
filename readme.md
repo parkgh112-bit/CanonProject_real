@@ -23,7 +23,13 @@
 *   **Report Export**: 분석 완료 데이터를 CSV 형식으로 추출하여 데이터 자산화 지원.
 
 ---
+## 모델 테스트
 
+<img width="600" height="875" alt="image" src="https://github.com/user-attachments/assets/a96072c9-a7ab-4c25-a033-5cb7adf5449e" />
+<img width="600" height="720" alt="1-ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/83deac98-2f8d-41da-9b13-c2c7eec9e3a5" />
+<img width="600" height="450" alt="2-ezgif com-video-to-gif-converter" src="https://github.com/user-attachments/assets/ec300cd5-fa95-48fe-8ccf-8fd834415d0d" />
+
+---
 ## 🛠 기술 스택 (Tech Stack)
 
 ### Backend & AI
