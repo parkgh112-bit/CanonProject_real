@@ -11,7 +11,7 @@
 ### 1. Multi-Model AI 분석 파이프라인
 *   **Object Detection (YOLO)**: 이미지 내 핵심 부품 및 객체 위치 탐지.
 *   **Classification (CNN)**: 탐지된 객체의 상태(Pass/Fail)를 정밀 분류.
-*   **Text Recognition (OCR)**: 제품 내 각인된 텍스트 및 시리얼 번호를 추출하여 데이터화.
+*   **Text Recognition (OCR)**: 제품 내 각인된 텍스트 및 시리얼 번호를 추출하여 데이터화. (결과적으로 사용 X)
 
 ### 2. 실시간 모니터링 & 배치 분석
 *   **Live Stream Analysis**: 연결된 카메라를 통해 실시간으로 프레임을 분석하고 즉각적인 피드백 제공.
