@@ -23,6 +23,13 @@
 *   **Report Export**: 분석 완료 데이터를 CSV 형식으로 추출하여 데이터 자산화 지원.
 
 ---
+
+## 데이터셋 규모 및 클래스 균형
+ - 총 학습 데이터: 1,200장 이상의 라벨링 데이터 구축 및 활용.
+ - 클래스 구성: 6개의 주요 객체(Home, Back, ID, Stat 버튼, Monitor, Text)에 대해 클래스 불균형 해소를 위한 데이터 증강 실시.
+ - 언어 데이터: 한국어(KR), 영어(EN), 일본어(JP), 중국어(CN/TW) 등 5개국 언어에 대한 수천 개의 텍스트 데이터셋 확보 및 검증.
+
+---
 ## 모델 테스트
 
 <img width="600" height="875" alt="image" src="https://github.com/user-attachments/assets/a96072c9-a7ab-4c25-a033-5cb7adf5449e" />
