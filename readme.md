@@ -1,3 +1,11 @@
+## 1. 프로젝트 개요 (상단 추가)
+Canon AI Project: FastAPI 기반 모델 서빙 및 실시간 추론
+
+Project Goal: AI 모델을 실제 서비스 환경(FastAPI)에 이식하고 효율적인 추론 서버 구축.
+
+My Role: 모델 서빙 환경 구축 및 윈도우 기반 서버 라이브러리 충돌 이슈 해결.
+
+
 ## PyTorch DLL 로드 오류 해결 보고서 (WinError 1114)
 
 PyTorch 기반 FastAPI 서버 실행 중 발생했던 `OSError: [WinError 1114] DLL 초기화 루틴을 실행할 수 없습니다. Error loading "C:\...\torch\lib\c10.dll" or one of its dependencies` 오류에 대한 문제 진단 및 해결 과정을 보고서 형식으로 정리했습니다.
