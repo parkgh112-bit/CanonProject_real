@@ -28,14 +28,14 @@ async def startup_event():
     BASE_DIR = os.path.dirname(os.path.abspath(__file__))
     
     # 모델 경로 설정 (Flask 코드와 동일한 구조)
-    yolo_path = os.path.join(BASE_DIR, "models", "YOLO.pt")
-    cnn_path = os.path.join(BASE_DIR, "models", "CNN_classifier.pt")
+    yolo_path = os.path.join(BASE_DIR, "models", "yolo_model.py")
+    cnn_path = os.path.join(BASE_DIR, "models", "cnn_model.py.pt")
     
     # 경로가 없으면 상대 경로로 시도
     if not os.path.exists(yolo_path):
-        yolo_path = "models/YOLO.pt"
+        yolo_path = "models/yolo_model.pt"
     if not os.path.exists(cnn_path):
-        cnn_path = "models/CNN_classifier.pt"
+        cnn_path = "models/cnn_model.py.pt"
     
     initialize_models(
         yolo_path=yolo_path,
